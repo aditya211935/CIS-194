@@ -4,7 +4,9 @@ module Main (main) where
 import Data.List
 
 skips :: [a] -> [[a]]
-skips a = [[fst y | y <- zip a [1..length a], snd y `mod` x == 0] | x <- [1..length a]]
+-- Using let bindings.
+-- (let (f, _) = y in f) can be substituted for fst y too
+skips a = [[(let (f, _) = y in f) | y <- zip a [1..length a], (let (_, s) = y in s) `mod` x == 0] | x <- [1..length a]]
 
 -- Not really shorter than the more straightforward solution
 localMaxima :: [Integer] -> [Integer]
