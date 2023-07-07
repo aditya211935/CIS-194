@@ -91,12 +91,29 @@ instance Fractional (Stream Integer) where
 
 fib3 :: Stream Integer
 -- 🤯🤯🤯
-fib3 = 1 / (1 - x - x^(2 :: Integer))
+fib3 = x / (1 - x - x^(2 :: Integer))
+
+-- (0,0), (0,1), (1,0), (1,1)
+data Matrix = Matrix Integer Integer Integer Integer
+
+instance Num Matrix where
+  (*) (Matrix a00 a01 a10 a11) (Matrix b00 b01 b10 b11) = Matrix (a00*b00 + a01*b01) (a00*b10 + a01*b11) (a10*b00 + a11*b01) (a10*b10 + a11*b11)
+
+
+fib4 :: Integer -> Integer
+fib4 0 = 0
+fib4 n = getNum $ Matrix 1 1 1 0 ^ n
+  where getNum (Matrix _ a01 _ _) = a01
+
+-- To force fibonacci number to be evaluated.
+lazyForce :: Integer -> Bool
+lazyForce n = n > 9999999999
 
 main :: IO()
 main = do
   -- print (inc "a0")
-  print (fib3)
+  print (lazyForce (fib4 1234567))
+  -- print (fib3)
   -- print (divPrint (streamRepeat "1") (subPrint (streamRepeat "1") xPrint))
   -- print (streamMap (\c -> c + 1) $ streamRepeat 11)
   -- print (streamFromSeed (\c -> c * 2) 1)
