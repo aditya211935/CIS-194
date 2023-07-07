@@ -9,6 +9,8 @@ fib 0 = 0
 fib 1 = 1
 fib n = fib (n-1) + fib (n-2)
 
+-- Builds fibonacci series in reverse. Eg.
+-- 8, 5, 3, 2, 1, 1, 0
 fibL :: [Integer] -> [Integer]
 fibL [] = [0]
 fibL [_] = [1, 0]
@@ -46,19 +48,20 @@ rules :: Stream Integer
 rules = streamMap getRules (streamFromSeed (+1) 1)
 
 -- Helper functions for exercise 6
--- Some operations to visualize how series are multiplied and divded.
+-- Some operations to visualize how series are multiplied and divided.
 addPrint :: Stream String -> Stream String -> Stream String
 addPrint (Cons a0 a') (Cons b0 b') = Cons ("(" ++ a0 ++ "+" ++ b0 ++ ")") (addPrint a' b')
 
--- Try this with 3 terms for it to make sense. Any larger and it'll be messy. Eg.
+-- Try this with 3 terms (change "take 10" to 3 above in show function) for it to make sense. Any larger and it'll be messy. Eg.
 -- print (mulPrint xPrint yPrint)
+-- NOTE: To change numbers of terms to display, change the argument to `take` function in `show` function above (probably line 28).
 mulPrint :: Stream String -> Stream String -> Stream String
 mulPrint (Cons a0 a') (Cons b0 b') = Cons ("(" ++ a0 ++ "*" ++ b0 ++ ")") (addPrint (mulPrint (streamRepeat a0) b') (mulPrint a' (Cons b0 b')))
 
 subPrint :: Stream String -> Stream String -> Stream String
 subPrint (Cons a0 a') (Cons b0 b') = Cons ("(" ++ a0 ++ "-" ++ b0 ++ ")") (subPrint a' b')
 
--- This is a little crazy. Even just printing 4 terms of the series will lead to huge 10 line result 🫠. Eg.
+-- This is a little crazy. Even just printing 4 terms of the series will lead to a huge 10 line result 🫠. Eg.
 -- print (divPrint (streamRepeat "1") (subPrint (streamRepeat "1") xPrint))
 -- The above represents (1/1-x) which gives coefficients 1,1,1,1...
 divPrint :: Stream String -> Stream String -> Stream String
