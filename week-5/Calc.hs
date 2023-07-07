@@ -61,6 +61,7 @@ run (Just x) = SVM.stackVM x
 class HasVars a where
   var :: String -> a
 
+-- VarExprT is not really used
 instance HasVars VarExprT where
   var = Var
 
@@ -78,6 +79,8 @@ maybeToTuple Nothing _ = Nothing
 maybeToTuple _ Nothing = Nothing
 maybeToTuple (Just x) (Just y) = Just (x, y)
 
+-- This instance is actually for a function, but functions are expressions too so I guess it's fine.
+-- It reads as "Every operation (lit, add, mul)" produces a function that when given a map, produces an Integer (maybe).
 instance Expr (M.Map String Integer -> Maybe Integer) where
   lit x _ = Just x
   add x y mp = case maybeToTuple (x mp) (y mp) of
