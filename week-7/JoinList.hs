@@ -2,7 +2,6 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 {-# HLINT ignore "Use if" #-}
 module JoinList where
--- module Main where
 
 import Sized
 import Scrabble
@@ -94,14 +93,3 @@ fromList list = case even len of
   False -> fromList (take ((len `div` 2) + 1) list) +++ fromList (drop ((len `div` 2) + 1) list)
   where
     len = length list
-
--- main = do
---   -- let tree = ((Single (Size 1) 1) +++ (Append (Size 2) (Single (Size 1) 2) (Single (Size 1) 3)))
---   -- print (indexJ (-2) tree)
---   -- print (takeJ 1 tree)
---   let t = (fromString "a\nb\nc\nd\n") :: JoinList (Score, Size) String
---   print (toString $ replaceLine 2 "e" t)
---   -- print (takeJ 1 t)
---   -- print (scoreLine "yay " +++ scoreLine "haskell!")
-
--- Append (9,Size 4) (Append (4,Size 2) (Single (1,Size 1) "a") (Single (3,Size 1) "b")) (Append (5,Size 2) (Single (3,Size 1) "c") (Single (2,Size 1) "d"))
