@@ -4,6 +4,7 @@ module Main where
 
 import Employee
 import Data.Tree
+import Data.List ( sortOn )
 
 glCons :: Employee -> GuestList -> GuestList
 glCons e (GL list f) = GL (e:list) (f + empFun e)
@@ -34,7 +35,10 @@ nextLevel e list = (with, without)
 maxFun :: Tree Employee -> GuestList
 maxFun = uncurry moreFun . treeFold (GL [] 0, GL [] 0) nextLevel
 
+format :: GuestList -> IO ()
+format (GL l f) = putStrLn ("Total fun: " ++ show f) >> mapM_ (putStrLn . empName) (sortOn empName l)
+
 main :: IO ()
 main = do
-  print (maxFun testCompany)
-  readFile "company.txt" >>= (\n -> print $ maxFun (read n :: Tree Employee))
+  -- print (maxFun testCompany)
+  readFile "company.txt" >>= (\n -> format $ maxFun (read n :: Tree Employee))
