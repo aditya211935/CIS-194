@@ -13,7 +13,7 @@ type Fun  = Integer
 data Employee = Emp { empName :: Name, empFun :: Fun }
   deriving (Show, Read, Eq)
 
--- A small company hierarchy to use for testing purposes.
+-- A small company hierarchy to use for testing purposes. 26
 testCompany :: Tree Employee
 testCompany
   = Node (Emp "Stan" 9)
@@ -32,7 +32,7 @@ testCompany
 testCompany2 :: Tree Employee
 testCompany2
   = Node (Emp "Stan" 9)
-    [ Node (Emp "Bob" 3) -- (8, 8)
+    [ Node (Emp "Bob" 3) -- (9, 9)
       [ Node (Emp "Joe" 5) -- (5, 6)
         [ Node (Emp "John" 1) [] -- (1, 0)
         , Node (Emp "Sue" 5) [] -- (5, 0)
